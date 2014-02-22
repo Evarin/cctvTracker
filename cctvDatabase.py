@@ -2,35 +2,56 @@
 # Requêtes sur la base
 
 from location import *
+import OSMExtractor
+
+import sqlite3
 
 class CCTVDatabase:
-    
-    def __init__(self, sql=False):
-        return
+    dbname="cctv.db"
+
+    def __init__(self):
+        self.conn = sqlite3.connect(CCTVDatabase.dbname)
+        table = "locations"
+        c = self.conn.cursor()
+        # Regarde si une base de données SQL a déjà été créée
+        lc = c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='"+table+"'")
+        for row in lc:
+            return
+        print("INITIALIZATION")
+        c.execute("CREATE TABLE locations(north, east)")
+        c.close()
+        self.initData()
 
     def addCCTV(self, location):
+        c = self.conn.cursor()
+        table = "locations"
+        c.execute("INSERT INTO "+table+" VALUES (?,?)", (location.north, location.east))
+        c.close()
+        self.conn.commit()
         return
 
-    def findCCTVs(self, location):
-        return [location]
+    def addCCTVs(self,locations):
+        c = self.conn.cursor()
+        #print(locations)
+        table = "locations"
+        places=[(l.north, l.east) for l in locations]
+        c.executemany("INSERT INTO "+table+" VALUES (?,?)", places)
+        c.close()
+        self.conn.commit()
+        return
 
-    @staticmethod
-    def buildFromXML(file):
-        db = CCTVDatabase()
-        db.addFromXML(file)
-        return db
-
-    @staticmethod
-    def buildFromSQL(file):
-        db = CCTVDatabase()
-        return db
+    def findCCTVs(self, location, tolerance=0.01):
+        c = self.conn.cursor()
+        table = "locations"
+        locs = c.execute("SELECT * FROM "+table+" WHERE north >= ? AND north <= ? AND east >= ? AND east <= ?",\
+                             (location.north-tolerance, location.north+tolerance, location.east-tolerance, location.east+tolerance))
+        locations = [Location(row[0], row[1]) for row in locs]
+        c.close()
+        return locations
+    
+    def initData(self):
+        locs1 = OSMExtractor.readFile("openStreetMap.xml")
+        self.addCCTVs(locs1)
 
 def initDatabase():
-    # Regarde si une base de données SQL a déjà été créée
-    if True:
-        db = CCTVDatabase.buildFromSQL("database.sql")
-        return db
-    # Sinon
-    else:
-        db = CCTVDatabase.buildFromXML("default.xml")
-        return db
+    return CCTVDatabase()
