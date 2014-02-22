@@ -1,15 +1,22 @@
 import cctvDatabase
 import cctvExternal
 from location import *
+import mapsDisplayer
 
 mainDB = cctvDatabase.initDatabase()
 extDB = cctvExternal.initExternal()
 
-def findCCTVs(location):
-    cctv1 = mainDB.findCCTVs(location)
-    cctv2 = []#extDB.findCCTVs(location)
-    return cctv1 + cctv2
+def findCCTVs(locations):
+    cctv = []
+    for loc in locations:
+        cctv += mainDB.findCCTVs(loc)
+    #cctv2 = extDB.findCCTVs(locations)
+    return cctv# + cctv2
 
 locations = findMyLocation("history-02-20-2014.kml")
-res = findCCTVs(Location(48.846597, 2.345231))
-print(res)
+res = findCCTVs(locations)
+
+ofile = open("result.html","w")
+ofile.write(mapsDisplayer.exportHTML(locations, res))
+ofile.close()
+print()
