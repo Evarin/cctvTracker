@@ -1,31 +1,31 @@
-# Structure de donnees et extraction des coordonnees GPS / KML
-
-class Location:
-    
-    def __init__(self, north=0, east=0):
-        self.north=north
-        self.east=east
-
-    def __repr__(self):
-        return str(self.north) + "N, " + str(self.east) + "E"
-
-
-
+# Data structure for locations
+# Data processing of Google Location History
 from xml.dom.minidom import parseString
 
-def findMyLocation(location):
+# Data structure
+class Location:
+    def __init__(self, lat, lon, time=0):
+        self.north = self.lat = lat
+        self.east = self.lon = lon
+        self.time = time
 
-    myLocation= []
+    def __repr__(self):
+        return str(self.lat) + "N, " + str(self.lon) + "E"
 
-    #read KML file as a string
-    file = open(location)
+# Data processing
+def locationHistory(filename):
+
+    myLocation = []
+
+    # reads KML file as a string
+    file = open(filename)
     data = file.read()
     file.close()
 
-    #parse string into DOM
+    # parses string into DOM
     dom = parseString(data)
 
-    #retrieve coordinates, whatever the namespace
+    # retrieves coordinates, whatever the namespace
     for d in dom.getElementsByTagNameNS('*','coord'):
         #in kml doc, first is longitude and second is latitude
         coords=d.firstChild.data.split(' ')

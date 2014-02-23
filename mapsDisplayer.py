@@ -1,7 +1,10 @@
+import commons
+
 googleAPIKey = "AIzaSyAQbUKKDk_G0y51l0BTiFP282hcbanlKs4"
 
-def exportHTML(path, cctv):
+def exportHTML(path, cctv, ecctv):
     pcoords = ""
+    ecoords = ""
     centern = 0.
     centere = 0.
     for loc in path:
@@ -12,7 +15,12 @@ def exportHTML(path, cctv):
     cctvsCoord=set([(loc.north, loc.east) for loc in cctv])
     for (n,e) in cctvsCoord:
         ccoords += "new google.maps.Marker({ position: new google.maps.LatLng("+str(n)+", "+str(e)+"),\
- map: map, title: 'Camera'});\n";
+ map: map, title: 'Camera', icon: cctvIcon});\n";
+    
+    ecctvsCoord=set([(loc.north, loc.east, loc.loctype) for loc in ecctv])
+    for (n,e,d) in ecctvsCoord:
+        ecoords += "new google.maps.Marker({ position: new google.maps.LatLng("+str(n)+", "+str(e)+"),\
+ map: map, title: '"+d+"'});\n";
     pcoords=pcoords[:-2]
     centern/=len(path)
     centere/=len(path)
@@ -27,6 +35,7 @@ def exportHTML(path, cctv):
         };\n\
 \n\
         var map = new google.maps.Map(document.getElementById(\"map-canvas\"), mapOptions);\n\
+        var cctvIcon = \"cctv-camera-icon.png\"\n\
 \n\
         var pathCoordinates = ["+pcoords+"];\n\
 \n        // Chemin parcouru\n\
@@ -35,6 +44,9 @@ def exportHTML(path, cctv):
         });\n\
 \n        // Caméras de surveillance\n\
         "+ccoords+"\n\
+\n\
+\n        // Locations\n\
+        "+ecoords+"\n\
 \n\
         movePath.setMap(map);\n\
       }\n\
@@ -46,3 +58,9 @@ def exportHTML(path, cctv):
   </body>\n\
 </html>"
     return output
+
+def rapport(path, cctv, ecctv):
+    output = "<html>\n<head>\n <title>Smile, you're on TV</title>\n\
+    </head>\n<body>\n <h1>Rapport de passage à la (CC)TV</h1>\n <ul>\n"
+    for loc in cctv:
+        return
