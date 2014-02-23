@@ -1,0 +1,104 @@
+<html>
+<head>
+ <title>Smile, you're on TV</title>
+ <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+ <style type="text/css">
+ html { height: 100% }
+ body { height: 100%; margin: 0; padding: 0 }
+ #map-canvas { height: 100% }
+ </style>
+ <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQbUKKDk_G0y51l0BTiFP282hcbanlKs4&sensor=false"></script>
+ <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {          center: new google.maps.LatLng(48.8314043298, 2.32780538723),          zoom: 12        };
+
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        var cctvIcon = "cctv-camera-icon.png"
+
+        var pathCoordinates = [new google.maps.LatLng(48.8477806, 2.3484271),
+new google.maps.LatLng(48.8487978, 2.348127),
+new google.maps.LatLng(48.8474736, 2.3487051),
+new google.maps.LatLng(48.8474655, 2.3486727),
+new google.maps.LatLng(48.8576952, 2.3415111),
+new google.maps.LatLng(48.8482049, 2.3470594),
+new google.maps.LatLng(48.8482373, 2.3476779),
+new google.maps.LatLng(48.8481714, 2.3480838),
+new google.maps.LatLng(48.846611, 2.346473),
+new google.maps.LatLng(48.8467733, 2.3446753),
+new google.maps.LatLng(48.8464431, 2.3447024),
+new google.maps.LatLng(48.8470556, 2.3422982),
+new google.maps.LatLng(48.8467661, 2.3408432),
+new google.maps.LatLng(48.8464804, 2.3402981),
+new google.maps.LatLng(48.8402558, 2.3366128),
+new google.maps.LatLng(48.8400333, 2.3364168),
+new google.maps.LatLng(48.8330964, 2.3313825),
+new google.maps.LatLng(48.8315219, 2.3299762),
+new google.maps.LatLng(48.8286635, 2.3275534),
+new google.maps.LatLng(48.8277854, 2.3264279),
+new google.maps.LatLng(48.8283688, 2.3271012),
+new google.maps.LatLng(48.8295053, 2.3282157),
+new google.maps.LatLng(48.8295053, 2.3282157),
+new google.maps.LatLng(48.8279239, 2.3262904),
+new google.maps.LatLng(48.8240864, 2.3182312),
+new google.maps.LatLng(48.8243822, 2.3188817),
+new google.maps.LatLng(48.8220827, 2.3137574),
+new google.maps.LatLng(48.8221714, 2.3148656),
+new google.maps.LatLng(48.8212908, 2.3139643),
+new google.maps.LatLng(48.8208906, 2.3142062),
+new google.maps.LatLng(48.8203612, 2.3219523),
+new google.maps.LatLng(48.8205393, 2.3152685),
+new google.maps.LatLng(48.8211456, 2.3202648),
+new google.maps.LatLng(48.8202998, 2.315087),
+new google.maps.LatLng(48.8206052, 2.3152636),
+new google.maps.LatLng(48.8208468, 2.3151862),
+new google.maps.LatLng(48.8187935, 2.3149192),
+new google.maps.LatLng(48.8204203, 2.3147186),
+new google.maps.LatLng(48.8205134, 2.3148685),
+new google.maps.LatLng(48.8211456, 2.3202648),
+new google.maps.LatLng(48.820587, 2.3145767),
+new google.maps.LatLng(48.8204187, 2.314489),
+new google.maps.LatLng(48.8210339, 2.3149834),
+new google.maps.LatLng(48.8216664, 2.3149303),
+new google.maps.LatLng(48.8208261, 2.3211208),
+new google.maps.LatLng(48.8205858, 2.3143861),
+new google.maps.LatLng(48.8206954, 2.3149201)];
+
+        // Chemin parcouru
+        var movePath = new google.maps.Polyline({            path: pathCoordinates, geodesic: true, strokeColor: '#FF0000', strokeOpacity: 1.0,strokeWeight: 2        });
+
+        // Cameras de surveillance
+        
+
+
+        // Locations
+        new google.maps.Marker({ position: new google.maps.LatLng(48.8208465, 2.3211004), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8474410, 2.3487490), map: map, title: '/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8221660, 2.3147690), map: map, title: '/restaurant/food/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8279990, 2.3262360), map: map, title: '/school/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8482540, 2.3470060), map: map, title: '/restaurant/food/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8478150, 2.3484600), map: map, title: '/restaurant/food/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8488300, 2.3480870), map: map, title: '/local_government_office/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8470025, 2.3423847), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8477000, 2.3484560), map: map, title: '/cafe/bar/food/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8402690, 2.3366277), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8221625, 2.3148825), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8478152, 2.3484603), map: map, title: '/point_of_interest/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8464078, 2.3403034), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8466599, 2.3465643), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8220440, 2.3136413), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8207670, 2.3211590), map: map, title: '/store/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8467420, 2.3409540), map: map, title: '/beauty_salon/clothing_store/store/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8243985, 2.3189266), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8478150, 2.3484600), map: map, title: '/travel_agency/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8279270, 2.3261690), map: map, title: '/dentist/doctor/health/establishment'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8240833, 2.3181772), map: map, title: '/route'});
+new google.maps.Marker({ position: new google.maps.LatLng(48.8478150, 2.3484600), map: map, title: '/bar/restaurant/food/establishment'});
+
+
+        movePath.setMap(map);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>    <div id="map-canvas"/>  </body>
+</html>

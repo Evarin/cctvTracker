@@ -45,7 +45,7 @@ def exportHTML(path, cctv, ecctv):
         var movePath = new google.maps.Polyline({\
             path: pathCoordinates, geodesic: true, strokeColor: '#FF0000', strokeOpacity: 1.0,strokeWeight: 2\
         });\n\
-\n        // Caméras de surveillance\n\
+\n        // Cameras de surveillance\n\
         "+ccoords+"\n\
 \n\
 \n        // Locations\n\

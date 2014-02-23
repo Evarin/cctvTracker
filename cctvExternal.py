@@ -24,6 +24,7 @@ class ExternalRequester:
 
     def findCCTVs(self, locationN, locationE, radius):
         print("Google Query")
+        loc=location.Location(float(locationN),float(locationE))
         NearbyLoc = []
         conn = HTTPSConnection("maps.googleapis.com")
         parametres = "location="+str(locationN)+","+str(locationE)+"&radius="+str(radius)+"&sensor=false&key="+commons.googleAPIKey
@@ -39,7 +40,9 @@ class ExternalRequester:
             north = result.find('./geometry/location/lat').text
             east = result.find('./geometry/location/lng').text
             aux=Nearby(north,east,loctype,name)
-            NearbyLoc.append(aux)
+            loc2=location.Location(float(north),float(east))
+            if(commons.dist(loc,loc2) <= 0.001*radius and ('atm' in loctype or 'airport' in loctype or 'bank' in loctype or 'city_hall' in loctype or 'embassy' in loctype or 'gas_station' in loctype or 'hospital' in loctype or 'liquor_store' in loctype or 'local_government_office' in loctype or 'police' in loctype or 'post_office' in loctype or 'subway_station' in loctype or 'train_station' in loctype)):
+                NearbyLoc.append(aux)
         return NearbyLoc
 
 #return all external information available for a file
