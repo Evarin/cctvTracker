@@ -46,19 +46,18 @@ class CCTVDatabase:
         table = "locations"
         locs = c.execute("SELECT * FROM "+table+" WHERE north >= ? AND north <= ? AND east >= ? AND east <= ?",\
                              (location.north-tolerance, location.north+tolerance, location.east-tolerance, location.east+tolerance))
-        locations = [Location(row[0], row[1]) for row in locs]
+        locations = [Location(row[0], row[1], desc=row[2]) for row in locs]
         locations = [loc for loc in locations if commons.dist(loc, location) <= tolerance*10]
         c.close()
         return locations
     
-    def setAddress(self, locations):
+    def setAddresses(self, locations):
         c = self.conn.cursor()
         table = "locations"
-        locs = c.execute("SELECT * FROM "+table+" WHERE north >= ? AND north <= ? AND east >= ? AND east <= ?",\
-                             (location.north-tolerance, location.north+tolerance, location.east-tolerance, location.east+tolerance))
-        locations = [Location(row[0], row[1]) for row in locs]
-        locations = [loc for loc in locations if commons.dist(loc, location) <= tolerance*10]
+        places=[(l.desc, l.north, l.east) for l in locations]
+        locs = c.executemany("UPDATE "+table+" SET address=? WHERE north=? AND east=?", places)
         c.close()
+        self.conn.commit()
     
     def initData(self):
         locs1 = OSMExtractor.readFile("openStreetMap.xml")

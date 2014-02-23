@@ -1,5 +1,8 @@
 import commons
 
+from http.client import HTTPSConnection
+from xml.dom.minidom import parseString
+
 googleAPIKey = "AIzaSyAQbUKKDk_G0y51l0BTiFP282hcbanlKs4"
 
 def exportHTML(path, cctv, ecctv):
@@ -59,8 +62,35 @@ def exportHTML(path, cctv, ecctv):
 </html>"
     return output
 
-def rapport(path, cctv, ecctv):
+def lookForAddress(loc):
+    print("Google GEOCODE Query")
+    conn = HTTPSConnection("maps.googleapis.com")
+    parametres = "latlng="+loc.latlng()+"&sensor=false&key="+commons.googleAPIKey
+    conn.request("GET", "/maps/api/geocode/xml?"+parametres)
+    response = conn.getresponse()
+    data = response.read()
+    dom = parseString(data)
+    for d in dom.getElementsByTagNameNS("*", 'formatted_address'):
+         loc.desc = d.firstChild.data
+         print(loc.desc)
+         return
+
+def rapport(path, cctv, ecctv, db):
     output = "<html>\n<head>\n <title>Smile, you're on TV</title>\n\
     </head>\n<body>\n <h1>Rapport de passage à la (CC)TV</h1>\n <ul>\n"
+    toupdate = []
     for loc in cctv:
-        return
+        if loc.desc == "":
+            lookForAddress(loc)
+            toupdate+=[loc]
+        minloc = path[0]
+        mindist = 100000
+        for p in path:
+            dst = commons.dist(loc, p)
+            if dst<mindist:
+                minloc = p
+                mindist = dst
+        output += "  <li>Caméra : "+loc.desc+"<br />Passage à "+minloc.time+"</li>\n"
+    output+="</ul>\n</body>\n</html>"
+    db.setAddresses(toupdate)
+    return output
