@@ -1,0 +1,32 @@
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{MPRI Web Data Management Project}
+\subtitle{Aligning personal data : ccTV tracker using geolocalisation}
+
+\author{Andreea Beica, Robin Champenois}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+The purpose of the project is to locate surveillance cameras on whose footage a person could appear during their daily trajectories, using geolocalisation information gathered by generally available API's, such as Google Maps Location, or Open Street Map.
+
+\section{Organisation}
+
+The project is organised as follows:
+
+\begin{itemize}
+\item geolocalisation information collection: we use the Google Location History feature of Google Maps (accessible via a Google account) in order to track our trajectory and then retrieve and store all the visited locations in a suitable format (i.e., latitute + longitude)
+\item surveillance camera database construction: sing the Open Street Map API, we construct a database of all the positions of surveillance cameras; we envisaged using more than one database, one for every region we would decide upon, in order anticipate large-scale storage or more efficient querying, but ultimately found that doing so did not improve things in a significant manner
+\item external information collection: we then proceed to locate other potential surveillance cameras that might have caught footage of us but aren't contained in the information provided by Open Street Map; for this, we use the geolocalisation information gathered earlier on and the Google Places API to find places of interest we might have passed; we then filter these places, keeping only the ones that are usually equipped with ccTV cameras (e.g., ATM's, banks, public institutions, public transport stations)
+\item locating potential footage: the final step is combining the personal data collected with the ccTV data in order to locate ccTV cameras that might have filmed us during our trajectories
+\end{itemize}
+\end{document}
