@@ -2,7 +2,7 @@
 
 class Location:
     
-    def __init__(self, north=0, east=0.):
+    def __init__(self, north=0, east=0):
         self.north=north
         self.east=east
 
