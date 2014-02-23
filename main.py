@@ -11,7 +11,7 @@ def findCCTVs(locations):
     for loc in locations:
         cctv += mainDB.findCCTVs(loc)
     print(len(cctv))
-    extcctv = cctvExternal.queryExternal(locations, 100)
+    extcctv = cctvExternal.queryExternal(locations, 10)
     return (cctv, extcctv)
 
 locations = locationHistory('LocationHistory/history-02-22-2014.kml')

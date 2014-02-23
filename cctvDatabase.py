@@ -1,5 +1,5 @@
-# Insertion dans la base de données
-# Requêtes sur la base
+# Insertion dans la base de donnees
+# Requetes sur la base
 
 from location import *
 import OSMExtractor
@@ -14,7 +14,7 @@ class CCTVDatabase:
         self.conn = sqlite3.connect(CCTVDatabase.dbname)
         table = "locations"
         c = self.conn.cursor()
-        # Regarde si une base de données SQL a déjà été créée
+        # Regarde si une base de donnees SQL a deja ete creee
         lc = c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='"+table+"'")
         for row in lc:
             return
