@@ -26,7 +26,7 @@ class ExternalRequester:
 
     # Gives relevant places around a location
     def findCCTVsNearLoc(self, locationN, locationE, radius):
-        print("Google Query")
+        print("Google NEARBY Query")
         loc=location.Location(float(locationN),float(locationE))
         NearbyLoc = []
         conn = HTTPSConnection("maps.googleapis.com")
@@ -36,15 +36,15 @@ class ExternalRequester:
         data = response.read()
         root = ET.fromstring(data)
         for result in root.findall('result'):
-            loctype = ''
+            loctype = []
             name = result.find('name').text#.encode('utf-8')
             for lc in result.findall('type'):
-                loctype+='/'+lc.text
+                loctype.append(lc.text)
             north = result.find('./geometry/location/lat').text
             east = result.find('./geometry/location/lng').text
             aux = Nearby(north, east, loctype, name)
             loc2 = location.Location(float(north),float(east))
-            if(commons.dist(loc,loc2) <= 0.001*radius and True):#('atm' in loctype or 'airport' in loctype or 'bank' in loctype or 'city_hall' in loctype or 'embassy' in loctype or 'gas_station' in loctype or 'hospital' in loctype or 'liquor_store' in loctype or 'local_government_office' in loctype or 'police' in loctype or 'post_office' in loctype or 'subway_station' in loctype or 'train_station' in loctype)):
+            if(commons.dist(loc,loc2) <= 0.001*radius and ('atm' in loctype or 'airport' in loctype or 'bank' in loctype or 'city_hall' in loctype or 'embassy' in loctype or 'gas_station' in loctype or 'hospital' in loctype or 'liquor_store' in loctype or 'local_government_office' in loctype or 'police' in loctype or 'post_office' in loctype or 'subway_station' in loctype or 'train_station' in loctype)):
                 NearbyLoc.append(aux)
         return NearbyLoc
     
