@@ -1,5 +1,6 @@
 # Data structure for locations
 # Data processing of Google Location History
+
 from xml.dom.minidom import parseString
 from xml.dom.minidom import Node
 
