@@ -12,7 +12,6 @@ def findCCTVs(locations):
     cctv = []
     for loc in locations:
         cctv += mainDB.findCCTVs(loc)
-    print(len(cctv))
     extcctv = extDB.findCCTVsNearPath(locations)
     return (cctv, extcctv)
 
@@ -31,3 +30,5 @@ else:
         webbrowser.open("report.html")
     except Exception:
         print("end")
+    
+    sys.exit(0)
