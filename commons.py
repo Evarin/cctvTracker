@@ -2,6 +2,9 @@
 
 import math
 
+# Put your own GOOGLE API KEY here : see https://code.google.com/apis/console/
+# You need to have Geocoding API and Places API enabled
+# Alors Google Maps Javascript API v3 for the rendering of the output
 googleAPIKey = "AIzaSyAQbUKKDk_G0y51l0BTiFP282hcbanlKs4"
 #googleAPIKey = "AIzaSyChH08xskE0kNH_Ih9oO08wpK2LzYf9x5Y"
 
